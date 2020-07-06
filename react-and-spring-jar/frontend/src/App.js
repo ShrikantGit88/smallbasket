@@ -1,28 +1,20 @@
-import React, {Component, useState, useEffect} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import AppRouter from './routers/AppRouter';
+import getAppStore from './store/store';
+import { getBooks } from './actions/books';
+import './styles/styles.scss';
 
-function App () {
-    const [message, setMessage] = useState("");
+import { Provider } from 'react-redux';
 
-    useEffect(() => {
-        fetch('/api/hello')
-            .then(response => response.text())
-            .then(message => {
-                setMessage(message);
-            });
-    },[])
-    return (
-        <div className="App">
-        <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <h1 className="App-title">{message}</h1>
-        </header>
-        <p className="App-intro">
-        To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
-    </div>
-)
-}
+const store = getAppStore();
 
-export default App;
+const template = (
+    <Provider store={store}>
+        <AppRouter />
+    </Provider>
+);
+
+store.dispatch(getBooks()).then(() => {
+    ReactDOM.render(template, document.getElementById('app'));
+});
