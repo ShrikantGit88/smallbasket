@@ -61,7 +61,7 @@ export const getBooks = () => {
     return (dispatch) => {
         return axios.get('books').then(result => {
             const books = [];
-console.log(">> "+JSON.stringify(result));
+
             result.data.forEach(item => {
                 books.push(item);
             });
