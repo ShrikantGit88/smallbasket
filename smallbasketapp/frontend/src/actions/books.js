@@ -61,12 +61,13 @@ export const getBooks = () => {
     return (dispatch) => {
         return axios.get('books').then(result => {
             const books = [];
-console.log(">> "+JSON.stringify(result));
+            console.log(">> "+JSON.stringify(result));
             result.data.forEach(item => {
                 books.push(item);
             });
 
             dispatch(_getBooks(books));
-        });
+        })
+        .catch( error => console.log(`got error in api call /books ${error}`));
     };
 };
